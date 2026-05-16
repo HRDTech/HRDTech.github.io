@@ -1,833 +1,1223 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="HRDTech – Portafolio de aplicaciones y proyectos de software." />
-  <meta name="theme-color" content="#0d1117" />
-  <title>HRDTech · Apps</title>
+  <meta name="description" content="HRDTech – Portfolio de aplicaciones, repositorios y proyectos de software open source." />
+  <meta name="theme-color" content="#0a0c10" />
+  <meta name="color-scheme" content="dark" />
+  <meta property="og:title" content="HRDTech · Apps & Projects" />
+  <meta property="og:description" content="Explora y descarga todas las aplicaciones y proyectos desarrollados por HRDTech." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://hrdtech.github.io" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="HRDTech · Apps & Projects" />
+  <meta name="twitter:description" content="Explora y descarga todas las aplicaciones y proyectos open source de HRDTech." />
+  <link rel="canonical" href="https://hrdtech.github.io" />
+  <title>HRDTech · Apps &amp; Projects</title>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
-
-  <!-- Marked.js for Markdown rendering -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js" defer></script>
 
   <style>
-    /* ─── TOKENS ─────────────────────────────────────────────── */
-    :root {
-      --bg:        #0a0c10;
-      --surface:   #111318;
-      --border:    #1e222b;
-      --accent:    #00e5a0;
-      --accent2:   #0af;
-      --text:      #e6eaf3;
-      --muted:     #6b7280;
-      --danger:    #ff5f57;
-      --warn:      #ffbc2e;
-      --ok:        #28c840;
-      --radius:    14px;
-      --mono:      'JetBrains Mono', monospace;
-      --sans:      'Instrument Sans', sans-serif;
-      --display:   'Syne', sans-serif;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    :root{
+      --bg:#090b11;
+      --surface:#11151f;
+      --surface2:#161c2b;
+      --border:#1e2538;
+      --border2:#2a3350;
+      --accent:#00f5a0;
+      --accent-dim:rgba(0,245,160,.08);
+      --accent2:#00d4ff;
+      --accent3:#a855f7;
+      --accent3-dim:rgba(168,85,247,.08);
+      --text:#e8ecf4;
+      --text2:#b0b8cc;
+      --muted:#6b7394;
+      --muted2:#3a4166;
+      --danger:#ff5f57;
+      --ok:#28c840;
+      --warning:#f0b429;
+      --r:14px;
+      --r-sm:8px;
+      --r-xs:5px;
+      --mono:'JetBrains Mono',monospace;
+      --sans:'Inter',sans-serif;
+      --display:'Syne',sans-serif;
+      --nav-h:58px;
+      --shadow:0 8px 32px rgba(0,0,0,.4);
+      --shadow-hover:0 20px 60px rgba(0,245,160,.08);
+      --gradient:linear-gradient(135deg,var(--accent),var(--accent2));
+    }
+    body{
+      background:var(--bg);color:var(--text);
+      font-family:var(--sans);font-size:15px;line-height:1.65;
+      min-height:100vh;overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button{cursor:pointer}
+    select,input{-webkit-appearance:none;appearance:none}
+
+    /* NOISE TEXTURE */
+    body::before{
+      content:'';position:fixed;inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+      pointer-events:none;z-index:0;opacity:.5
     }
 
-    /* ─── RESET ──────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 15px;
-      line-height: 1.65;
-      min-height: 100vh;
-      overflow-x: hidden;
+    /* ORBS */
+    .orb{
+      position:fixed;border-radius:50%;filter:blur(140px);
+      pointer-events:none;z-index:0;
+      animation:orbFloat 12s ease-in-out infinite;
     }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
-
-    /* ─── NOISE OVERLAY ──────────────────────────────────────── */
-    body::before {
-      content: '';
-      position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: .5;
+    .orb-1{width:700px;height:700px;background:var(--accent);opacity:.06;top:-260px;left:-260px}
+    .orb-2{width:600px;height:600px;background:var(--accent2);opacity:.06;bottom:-200px;right:-200px;animation-delay:-5s}
+    .orb-3{width:400px;height:400px;background:var(--accent3);opacity:.04;top:40%;left:50%;transform:translate(-50%,-50%);animation-delay:-2.5s}
+    @keyframes orbFloat{
+      0%,100%{transform:translate(0,0)scale(1)}
+      33%{transform:translate(40px,-30px)scale(1.06)}
+      66%{transform:translate(-30px,35px)scale(.94)}
     }
 
-    /* ─── GLOW ORBS ──────────────────────────────────────────── */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: .12;
-      pointer-events: none;
-      z-index: 0;
+    /* PROGRESS BAR */
+    #progress-bar{
+      position:fixed;top:0;left:0;height:3px;width:0%;
+      background:var(--gradient);
+      box-shadow:0 0 16px var(--accent);
+      z-index:1000;transition:width .35s ease,opacity .6s ease
     }
-    .orb-1 { width: 600px; height: 600px; background: var(--accent);  top: -200px; left: -200px; }
-    .orb-2 { width: 500px; height: 500px; background: var(--accent2); bottom: -150px; right: -150px; }
+    #progress-bar.done{opacity:0}
 
-    /* ─── LAYOUT ─────────────────────────────────────────────── */
-    .wrapper { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    /* LAYOUT */
+    .wrapper{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 28px}
 
-    /* ─── HEADER ─────────────────────────────────────────────── */
-    header {
-      padding: 64px 0 48px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
+    /* SKIP LINK */
+    .skip-link{
+      position:absolute;top:-100%;left:12px;z-index:999;
+      background:var(--accent);color:#000;padding:8px 16px;
+      border-radius:var(--r-sm);font-family:var(--mono);font-size:12px;
+      transition:top .2s
     }
-    .logo-badge {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      padding: 6px 16px 6px 8px;
-      font-family: var(--mono);
-      font-size: 12px;
-      color: var(--muted);
-      letter-spacing: .04em;
-    }
-    .logo-dot {
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 8px var(--accent);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%,100% { opacity: 1; transform: scale(1); }
-      50%      { opacity: .5; transform: scale(.8); }
-    }
-    h1 {
-      font-family: var(--display);
-      font-size: clamp(2.4rem, 6vw, 4.2rem);
-      font-weight: 800;
-      line-height: 1.08;
-      letter-spacing: -.03em;
-    }
-    h1 span { color: var(--accent); }
-    .subtitle {
-      color: var(--muted);
-      font-size: 1rem;
-      max-width: 480px;
-    }
+    .skip-link:focus{top:12px}
 
-    /* ─── STATS BAR ──────────────────────────────────────────── */
-    .stats-bar {
-      display: flex; flex-wrap: wrap; gap: 20px;
-      margin-top: 8px;
+    /* NAV */
+    #nav{
+      position:sticky;top:0;z-index:60;
+      height:var(--nav-h);border-bottom:1px solid transparent;
+      transition:background .35s,border-color .35s,backdrop-filter .35s
     }
-    .stat {
-      display: flex; align-items: center; gap: 8px;
-      font-family: var(--mono); font-size: 12px; color: var(--muted);
+    #nav.scrolled{
+      background:rgba(9,11,17,.85);border-color:var(--border);
+      backdrop-filter:blur(20px)
     }
-    .stat strong { color: var(--text); font-size: 18px; font-family: var(--display); font-weight: 700; }
+    .nav-inner{
+      height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px
+    }
+    .nav-logo{
+      display:flex;align-items:center;gap:10px;
+      font-family:var(--display);font-size:1.05rem;font-weight:800
+    }
+    .nav-dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--accent);box-shadow:0 0 12px var(--accent);
+      animation:pulse 2.4s ease-in-out infinite
+    }
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+    .nav-right{display:flex;align-items:center;gap:18px}
+    .nav-link{
+      font-family:var(--mono);font-size:12px;color:var(--muted);
+      transition:color .25s;position:relative
+    }
+    .nav-link::after{
+      content:'';position:absolute;bottom:-3px;left:0;width:0;height:1.5px;
+      background:var(--gradient);transition:width .25s;border-radius:2px
+    }
+    .nav-link:hover{color:var(--text)}
+    .nav-link:hover::after{width:100%}
+    .nav-gh-btn{
+      display:flex;align-items:center;gap:6px;
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--r-sm);padding:6px 14px;
+      font-family:var(--mono);font-size:11px;color:var(--muted);
+      transition:all .25s
+    }
+    .nav-gh-btn:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
 
-    /* ─── CONTROLS ───────────────────────────────────────────── */
-    .controls {
-      display: flex; flex-wrap: wrap; align-items: center;
-      gap: 12px;
-      margin-bottom: 32px;
+    /* HEADER */
+    header{padding:96px 0 56px}
+    .header-eyebrow{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--accent-dim);border:1px solid rgba(0,245,160,.15);
+      border-radius:999px;padding:6px 16px;
+      font-family:var(--mono);font-size:11px;letter-spacing:.08em;
+      color:var(--accent);margin-bottom:28px
     }
-    .search-wrap {
-      position: relative; flex: 1; min-width: 220px;
+    h1{
+      font-family:var(--display);
+      font-size:clamp(2.8rem,7vw,5rem);
+      font-weight:800;line-height:1.04;letter-spacing:-.03em;
+      margin-bottom:20px
     }
-    .search-wrap svg {
-      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-      opacity: .4; pointer-events: none;
-    }
-    input[type=search] {
-      width: 100%;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 14px;
-      padding: 10px 14px 10px 40px;
-      outline: none;
-      transition: border-color .2s;
-    }
-    input[type=search]:focus { border-color: var(--accent); }
-    input[type=search]::placeholder { color: var(--muted); }
-
-    .filter-btns { display: flex; flex-wrap: wrap; gap: 8px; }
-    .filter-btn {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      color: var(--muted);
-      cursor: pointer;
-      font-family: var(--mono);
-      font-size: 11px;
-      padding: 6px 14px;
-      letter-spacing: .05em;
-      transition: all .2s;
-    }
-    .filter-btn:hover,
-    .filter-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #000;
+    h1 .g1{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    h1 .g2{color:var(--accent3)}
+    .subtitle{
+      color:var(--muted);font-size:1.05rem;
+      max-width:540px;line-height:1.75;margin-bottom:48px
     }
 
-    .sort-select {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      color: var(--text);
-      font-family: var(--mono);
-      font-size: 12px;
-      padding: 9px 14px;
-      cursor: pointer;
-      outline: none;
+    /* STATS */
+    .stats-row{display:flex;flex-wrap:wrap;gap:14px}
+    .stat-card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--r-sm);padding:16px 24px;
+      display:flex;align-items:center;gap:14px;
+      transition:border-color .25s,transform .25s,box-shadow .25s
     }
-    .sort-select:focus { border-color: var(--accent); }
+    .stat-card:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+    .stat-icon{
+      width:38px;height:38px;border-radius:10px;
+      display:flex;align-items:center;justify-content:center;
+      font-size:1.25rem;flex-shrink:0
+    }
+    .si-green{background:var(--accent-dim)}
+    .si-blue{background:rgba(0,212,255,.1)}
+    .si-purple{background:var(--accent3-dim)}
+    .stat-info{display:flex;flex-direction:column;gap:2px}
+    .stat-val{
+      font-family:var(--display);font-size:1.8rem;
+      font-weight:800;line-height:1
+    }
+    .stat-lbl{font-family:var(--mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
 
-    /* ─── GRID ───────────────────────────────────────────────── */
-    #grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 20px;
-      margin-bottom: 64px;
+    /* CONTROLS */
+    .controls-wrap{
+      position:sticky;top:var(--nav-h);z-index:50;
+      background:rgba(9,11,17,.9);backdrop-filter:blur(12px);
+      border-bottom:1px solid var(--border);padding:14px 0;margin-bottom:32px
     }
+    .controls{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+    .search-wrap{position:relative;flex:1;min-width:200px}
+    .search-wrap svg{
+      position:absolute;left:13px;top:50%;transform:translateY(-50%);
+      opacity:.4;pointer-events:none
+    }
+    input[type=search]{
+      width:100%;background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--r-sm);color:var(--text);font-family:var(--sans);
+      font-size:14px;padding:9px 13px 9px 40px;outline:none;
+      transition:border-color .25s,box-shadow .25s
+    }
+    input[type=search]:focus{
+      border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim)
+    }
+    input[type=search]::placeholder{color:var(--muted)}
 
-    /* ─── CARD ───────────────────────────────────────────────── */
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      transition: border-color .25s, transform .25s, box-shadow .25s;
-      animation: fadeUp .4s ease both;
+    .filter-group{display:flex;flex-wrap:wrap;gap:6px}
+    .filter-btn{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:999px;color:var(--muted);
+      font-family:var(--mono);font-size:11px;padding:5px 14px;
+      letter-spacing:.04em;transition:all .25s
     }
-    .card:hover {
-      border-color: var(--accent);
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0,229,160,.1);
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .card-header {
-      padding: 20px 20px 14px;
-      display: flex; align-items: flex-start; justify-content: space-between; gap: 12px;
-    }
-    .card-title {
-      font-family: var(--display);
-      font-size: 1.1rem;
-      font-weight: 700;
-      letter-spacing: -.01em;
-      line-height: 1.3;
-    }
-    .card-title a:hover { color: var(--accent); }
-
-    .lang-badge {
-      display: flex; align-items: center; gap: 6px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      font-family: var(--mono);
-      font-size: 10px;
-      padding: 4px 10px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    .lang-dot { width: 7px; height: 7px; border-radius: 50%; }
-
-    /* ─── README AREA ────────────────────────────────────────── */
-    .readme-area {
-      padding: 0 20px 16px;
-      flex: 1;
-    }
-    .readme-collapsed {
-      max-height: 120px;
-      overflow: hidden;
-      position: relative;
-    }
-    .readme-collapsed::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0;
-      height: 48px;
-      background: linear-gradient(transparent, var(--surface));
-    }
-    .readme-content {
-      font-size: 13px;
-      color: #9ca3af;
-      line-height: 1.7;
-    }
-    .readme-content h1, .readme-content h2, .readme-content h3 {
-      font-family: var(--display);
-      font-size: 14px;
-      color: var(--text);
-      margin: 10px 0 6px;
-    }
-    .readme-content p { margin-bottom: 8px; }
-    .readme-content ul, .readme-content ol { padding-left: 18px; margin-bottom: 8px; }
-    .readme-content li { margin-bottom: 3px; }
-    .readme-content code {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      font-family: var(--mono);
-      font-size: 11px;
-      padding: 1px 5px;
-    }
-    .readme-content pre {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      overflow-x: auto;
-      padding: 12px;
-      margin-bottom: 8px;
-    }
-    .readme-content pre code { border: none; background: transparent; padding: 0; }
-    .readme-content img { max-height: 100px; border-radius: 6px; }
-    .readme-content a { color: var(--accent2); text-decoration: underline; }
-    .readme-content blockquote {
-      border-left: 3px solid var(--accent);
-      padding-left: 12px;
-      color: var(--muted);
-      margin-bottom: 8px;
+    .filter-btn:hover{border-color:var(--border2);color:var(--text2)}
+    .filter-btn.active{
+      background:var(--accent);border-color:var(--accent);
+      color:#000;font-weight:500
     }
 
-    .read-more-btn {
-      background: none; border: none; cursor: pointer;
-      color: var(--accent); font-family: var(--mono); font-size: 11px;
-      padding: 4px 0; display: block; margin-top: 6px;
+    .ctrl-right{display:flex;align-items:center;gap:8px;margin-left:auto}
+    .ctrl-select{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--r-sm);color:var(--text);
+      font-family:var(--mono);font-size:12px;padding:8px 14px;
+      outline:none;cursor:pointer;transition:border-color .25s
     }
-    .read-more-btn:hover { text-decoration: underline; }
+    .ctrl-select:focus{border-color:var(--accent)}
 
-    .no-readme {
-      font-family: var(--mono); font-size: 12px;
-      color: var(--muted); font-style: italic;
+    .view-toggle{
+      display:flex;background:var(--surface);
+      border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden
     }
+    .view-btn{
+      background:none;border:none;color:var(--muted);
+      padding:7px 11px;transition:background .15s,color .15s
+    }
+    .view-btn.active{background:var(--border2);color:var(--text)}
+    .view-btn:hover:not(.active){color:var(--text2)}
 
-    /* ─── RELEASE SECTION ────────────────────────────────────── */
-    .releases-section {
-      border-top: 1px solid var(--border);
-      padding: 14px 20px;
+    /* GRID */
+    #grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(360px,1fr));
+      gap:22px;margin-bottom:80px
     }
-    .releases-title {
-      font-family: var(--mono);
-      font-size: 11px;
-      letter-spacing: .08em;
-      color: var(--muted);
-      text-transform: uppercase;
-      margin-bottom: 10px;
+    #grid.list-view{grid-template-columns:1fr}
+    #grid.list-view .card{flex-direction:row}
+    #grid.list-view .card-image{width:240px;height:auto;flex-shrink:0;border-radius:var(--r)0 0 var(--r)}
+    #grid.list-view .card-image::after{display:none}
+    #grid.list-view .card-main{flex:1;min-width:0}
+    #grid.list-view .card-desc{-webkit-line-clamp:3}
+    #grid.list-view .readme-collapsed{max-height:64px}
+
+    /* CARD */
+    .card{
+      position:relative;background:var(--surface);
+      border:1px solid var(--border);border-radius:var(--r);
+      display:flex;flex-direction:column;overflow:hidden;
+      transition:border-color .3s,transform .3s,box-shadow .3s;
+      animation:fadeUp .5s ease both
     }
-    .release-item {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 8px;
+    .card::before{
+      content:'';position:absolute;inset:-1px;border-radius:calc(var(--r)+1px);
+      background:var(--gradient);opacity:0;z-index:-1;
+      transition:opacity .4s;pointer-events:none
     }
-    .release-tag {
-      display: flex; align-items: center; gap: 6px;
-      font-family: var(--mono); font-size: 12px;
+    .card:hover{
+      border-color:transparent;transform:translateY(-6px);
+      box-shadow:var(--shadow-hover)
     }
-    .release-tag svg { opacity: .5; }
-    .release-name {
-      font-size: 12px; color: var(--muted); white-space: nowrap;
-      overflow: hidden; text-overflow: ellipsis; max-width: 140px;
-    }
-    .release-assets {
-      display: flex; flex-wrap: wrap; gap: 6px;
-    }
-    .dl-btn {
-      display: flex; align-items: center; gap: 5px;
-      background: linear-gradient(135deg, var(--accent) 0%, #00b87a 100%);
-      border-radius: 6px;
-      color: #000;
-      font-family: var(--mono);
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: .04em;
-      padding: 5px 10px;
-      transition: opacity .2s, transform .2s;
-      white-space: nowrap;
-    }
-    .dl-btn:hover { opacity: .85; transform: scale(1.03); }
-    .dl-btn.source {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      color: var(--muted);
-    }
-    .dl-btn.source:hover { border-color: var(--accent); color: var(--accent); }
-    .no-release {
-      font-family: var(--mono); font-size: 11px; color: var(--muted);
+    .card:hover::before{opacity:1}
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(24px)}
+      to{opacity:1;transform:translateY(0)}
     }
 
-    /* ─── CARD FOOTER ────────────────────────────────────────── */
-    .card-footer {
-      border-top: 1px solid var(--border);
-      padding: 12px 20px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 8px;
+    /* CARD IMAGE */
+    .card-image{
+      position:relative;height:180px;overflow:hidden;
+      background:var(--surface2);flex-shrink:0
     }
-    .meta-pills { display: flex; gap: 12px; }
-    .meta-pill {
-      display: flex; align-items: center; gap: 5px;
-      font-family: var(--mono); font-size: 11px; color: var(--muted);
+    .card-image::after{
+      content:'';position:absolute;bottom:0;left:0;right:0;height:60px;
+      background:linear-gradient(transparent,var(--surface));
+      pointer-events:none;z-index:2
     }
-    .gh-link {
-      display: flex; align-items: center; gap: 5px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-family: var(--mono); font-size: 11px; color: var(--muted);
-      padding: 4px 10px;
-      transition: all .2s;
+    .card-img-placeholder{
+      position:absolute;inset:0;
+      display:flex;align-items:center;justify-content:center;overflow:hidden
     }
-    .gh-link:hover { border-color: var(--accent); color: var(--accent); }
+    .card-img-placeholder::before{
+      content:attr(data-init);position:absolute;right:14px;bottom:-10px;
+      font-family:var(--display);font-size:7rem;font-weight:800;
+      color:rgba(255,255,255,.03);pointer-events:none;user-select:none;line-height:1
+    }
+    .card-img-placeholder .card-emoji{font-size:3rem;opacity:.5;z-index:1}
+    .card-og-img{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;z-index:1;
+      transition:transform .5s ease
+    }
+    .card:hover .card-og-img{transform:scale(1.05)}
 
-    /* ─── SKELETON ───────────────────────────────────────────── */
-    .skeleton-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      height: 300px;
-      overflow: hidden;
-      position: relative;
-    }
-    .skeleton-card::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.04) 50%, transparent 100%);
-      animation: shimmer 1.4s ease-in-out infinite;
-    }
-    @keyframes shimmer {
-      from { transform: translateX(-100%); }
-      to   { transform: translateX(100%); }
+    .badge-archived{
+      position:absolute;top:10px;left:10px;z-index:3;
+      background:rgba(0,0,0,.55);backdrop-filter:blur(8px);
+      border:1px solid var(--border2);border-radius:999px;
+      font-family:var(--mono);font-size:10px;color:var(--muted);padding:2px 10px
     }
 
-    /* ─── EMPTY STATE ────────────────────────────────────────── */
-    #empty {
-      display: none;
-      text-align: center;
-      padding: 80px 20px;
-      grid-column: 1/-1;
+    /* CARD HEADER */
+    .card-header{
+      padding:16px 20px 10px;
+      display:flex;align-items:flex-start;
+      justify-content:space-between;gap:12px
     }
-    #empty svg { opacity: .2; margin: 0 auto 16px; }
-    #empty p { color: var(--muted); font-family: var(--mono); font-size: 13px; }
+    .card-title{
+      font-family:var(--display);font-size:1.05rem;
+      font-weight:700;letter-spacing:-.01em;line-height:1.25
+    }
+    .card-title a{transition:color .25s;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 100%;background-position:0% 50%}
+    .card-title a:hover{background-position:100% 50%}
+    .lang-badge{
+      display:flex;align-items:center;gap:5px;
+      background:var(--bg);border:1px solid var(--border);
+      border-radius:999px;font-family:var(--mono);font-size:10px;
+      padding:3px 10px;white-space:nowrap;flex-shrink:0;color:var(--muted)
+    }
+    .lang-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-    /* ─── ERROR STATE ────────────────────────────────────────── */
-    #error-banner {
-      display: none;
-      background: rgba(255,95,87,.1);
-      border: 1px solid rgba(255,95,87,.3);
-      border-radius: var(--radius);
-      color: var(--danger);
-      font-family: var(--mono);
-      font-size: 13px;
-      margin-bottom: 32px;
-      padding: 16px 20px;
+    /* DESCRIPTION */
+    .card-desc{
+      padding:0 20px 10px;
+      font-size:13px;color:var(--text2);line-height:1.6;
+      display:-webkit-box;-webkit-line-clamp:2;
+      -webkit-box-orient:vertical;overflow:hidden
+    }
+    .card-desc.empty{color:var(--muted);font-style:italic;font-size:12px}
+
+    /* TOPICS */
+    .topics{padding:0 20px 12px;display:flex;flex-wrap:wrap;gap:5px}
+    .topic{
+      background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);
+      border-radius:999px;color:var(--accent2);
+      font-family:var(--mono);font-size:10px;padding:2px 9px;
+      letter-spacing:.02em;transition:background .2s
+    }
+    .topic:hover{background:rgba(0,212,255,.14)}
+
+    /* README */
+    .readme-area{padding:0 20px 14px;flex:1}
+    .section-lbl{
+      font-family:var(--mono);font-size:10px;letter-spacing:.1em;
+      color:var(--muted);text-transform:uppercase;margin-bottom:8px;
+      display:flex;align-items:center;gap:5px
+    }
+    .readme-collapsed{max-height:96px;overflow:hidden;position:relative}
+    .readme-collapsed::after{
+      content:'';position:absolute;bottom:0;left:0;right:0;height:40px;
+      background:linear-gradient(transparent,var(--surface))
+    }
+    .readme-content{
+      font-size:12.5px;color:#9ca3af;line-height:1.65
+    }
+    .readme-content h1,.readme-content h2,.readme-content h3{
+      font-family:var(--display);font-size:13px;color:var(--text);
+      margin:8px 0 4px
+    }
+    .readme-content p{margin-bottom:6px}
+    .readme-content ul,.readme-content ol{padding-left:16px;margin-bottom:6px}
+    .readme-content li{margin-bottom:2px}
+    .readme-content code{
+      background:var(--bg);border:1px solid var(--border);
+      border-radius:4px;font-family:var(--mono);font-size:11px;padding:1px 5px
+    }
+    .readme-content pre{
+      background:var(--bg);border:1px solid var(--border);
+      border-radius:6px;overflow-x:auto;padding:10px;margin-bottom:6px
+    }
+    .readme-content pre code{border:none;background:transparent;padding:0}
+    .readme-content img{max-height:80px;border-radius:4px}
+    .readme-content a{color:var(--accent2);text-decoration:underline}
+    .readme-content blockquote{
+      border-left:2px solid var(--accent);padding-left:10px;
+      color:var(--muted);margin-bottom:6px
+    }
+    .readme-content table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px}
+    .readme-content th,.readme-content td{
+      border:1px solid var(--border);padding:4px 8px;text-align:left
+    }
+    .readme-content th{background:var(--bg);color:var(--text2)}
+    .expand-btn{
+      background:none;border:none;color:var(--accent);
+      font-family:var(--mono);font-size:11px;
+      padding:4px 0;display:block;margin-top:4px;transition:color .25s
+    }
+    .expand-btn:hover{color:var(--accent2)}
+    .no-readme{font-family:var(--mono);font-size:11px;color:var(--muted2);font-style:italic}
+
+    /* RELEASES */
+    .releases-section{border-top:1px solid var(--border);padding:14px 20px}
+    .release-item{margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+    .release-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none}
+    .release-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+    .release-ver{
+      background:var(--accent-dim);border:1px solid rgba(0,245,160,.2);
+      border-radius:5px;color:var(--accent);
+      font-family:var(--mono);font-size:11px;font-weight:500;padding:2px 9px
+    }
+    .release-date{font-family:var(--mono);font-size:10px;color:var(--muted)}
+    .release-name{
+      font-size:12px;color:var(--muted);
+      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:6px
+    }
+    .release-assets{display:flex;flex-wrap:wrap;gap:5px}
+    .dl-btn{
+      display:inline-flex;align-items:center;gap:4px;
+      border-radius:6px;font-family:var(--mono);
+      font-size:10px;font-weight:500;padding:4px 10px;
+      transition:all .25s;white-space:nowrap
+    }
+    .dl-primary{
+      background:var(--gradient);color:#000
+    }
+    .dl-primary:hover{opacity:.85;transform:translateY(-1px)}
+    .dl-source{
+      background:var(--bg);border:1px solid var(--border);color:var(--muted)
+    }
+    .dl-source:hover{border-color:var(--accent);color:var(--accent)}
+    .no-release{font-family:var(--mono);font-size:11px;color:var(--muted2)}
+    .dl-count{
+      font-family:var(--mono);font-size:9px;color:var(--muted2);margin-left:2px
     }
 
-    /* ─── FOOTER ─────────────────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 24px 0;
-      display: flex; flex-wrap: wrap; align-items: center;
-      justify-content: space-between; gap: 12px;
-      font-family: var(--mono); font-size: 11px; color: var(--muted);
+    /* CARD FOOTER */
+    .card-footer{
+      border-top:1px solid var(--border);padding:10px 20px;
+      display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px
     }
-    footer a:hover { color: var(--accent); }
+    .meta-pills{display:flex;gap:12px}
+    .meta-pill{
+      display:flex;align-items:center;gap:4px;
+      font-family:var(--mono);font-size:11px;color:var(--muted)
+    }
+    .gh-link{
+      display:inline-flex;align-items:center;gap:5px;
+      background:var(--bg);border:1px solid var(--border);
+      border-radius:6px;font-family:var(--mono);font-size:11px;
+      color:var(--muted);padding:4px 10px;transition:all .25s
+    }
+    .gh-link:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
 
-    /* ─── MODAL ──────────────────────────────────────────────── */
-    #modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,.7);
-      backdrop-filter: blur(6px);
-      z-index: 100;
-      padding: 32px 16px;
-      overflow-y: auto;
+    /* SKELETON */
+    .sk-card{
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--r);overflow:hidden;position:relative;height:460px
     }
-    #modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      max-width: 720px;
-      width: 100%;
-      margin: auto;
-      padding: 32px;
-      position: relative;
+    .sk-card::after{
+      content:'';position:absolute;inset:0;
+      background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.03) 50%,transparent 100%);
+      animation:shimmer 1.6s ease-in-out infinite
     }
-    .modal-close {
-      position: absolute; top: 16px; right: 16px;
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 8px; color: var(--muted); cursor: pointer;
-      font-size: 18px; line-height: 1;
-      padding: 6px 10px;
+    .sk-card-body{padding:20px}
+    .sk-line{
+      height:12px;border-radius:6px;background:var(--border);margin-bottom:10px
     }
-    .modal-close:hover { color: var(--text); }
-    .modal-title {
-      font-family: var(--display); font-size: 1.5rem;
-      font-weight: 800; margin-bottom: 20px;
-      padding-right: 40px;
-    }
-    .modal-readme { font-size: 14px; }
+    .sk-line:nth-child(1){width:65%;height:16px}
+    .sk-line:nth-child(2){width:45%}
+    .sk-line:nth-child(3){width:85%}
+    .sk-line:nth-child(4){width:55%}
+    .sk-line:nth-child(5){width:30%}
+    @keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
 
-    /* ─── RESPONSIVE ─────────────────────────────────────────── */
-    @media (max-width: 600px) {
-      #grid { grid-template-columns: 1fr; }
-      header { padding: 40px 0 28px; }
+    /* EMPTY */
+    #empty{
+      display:none;text-align:center;
+      padding:100px 20px;grid-column:1/-1;
+      flex-direction:column;align-items:center;gap:12px
+    }
+    #empty.show{display:flex}
+    .empty-emoji{font-size:3rem;opacity:.35}
+    #empty h3{font-family:var(--display);color:var(--muted)}
+    #empty p{font-family:var(--mono);font-size:12px;color:var(--muted2)}
+
+    /* ERROR */
+    #error-banner{
+      display:none;background:rgba(255,95,87,.06);
+      border:1px solid rgba(255,95,87,.2);border-radius:var(--r-sm);
+      color:var(--danger);font-family:var(--mono);font-size:13px;
+      margin-bottom:28px;padding:14px 20px
+    }
+
+    /* TOAST */
+    #toast{
+      position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);
+      background:var(--surface);border:1px solid var(--border2);
+      border-radius:var(--r-sm);padding:12px 20px;
+      font-family:var(--mono);font-size:12px;color:var(--text2);
+      box-shadow:var(--shadow);z-index:300;
+      opacity:0;transition:transform .35s ease,opacity .35s ease;
+      pointer-events:none;
+      display:flex;align-items:center;gap:8px
+    }
+    #toast.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+    #toast.toast-error{color:var(--danger);border-color:rgba(255,95,87,.3)}
+    #toast.toast-success{color:var(--ok);border-color:rgba(40,200,64,.3)}
+
+    /* BACK TO TOP */
+    #back-top{
+      position:fixed;bottom:30px;right:30px;
+      background:var(--surface);border:1px solid var(--border);
+      border-radius:50%;color:var(--muted);
+      width:44px;height:44px;
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;transform:translateY(16px);
+      transition:opacity .3s,transform .3s,border-color .25s,color .25s,box-shadow .3s;
+      z-index:50;font-size:18px
+    }
+    #back-top.show{opacity:1;transform:translateY(0)}
+    #back-top:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 20px rgba(0,245,160,.1)}
+
+    /* FOOTER */
+    footer{
+      border-top:1px solid var(--border);padding:36px 0;
+      display:flex;flex-wrap:wrap;
+      align-items:center;justify-content:space-between;gap:16px
+    }
+    .footer-brand{display:flex;flex-direction:column;gap:4px}
+    .footer-logo{font-family:var(--display);font-size:1.1rem;font-weight:800}
+    .footer-logo span{background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .footer-sub{font-family:var(--mono);font-size:11px;color:var(--muted)}
+    .footer-links{display:flex;gap:20px}
+    .footer-links a{
+      font-family:var(--mono);font-size:12px;
+      color:var(--muted);transition:color .25s
+    }
+    .footer-links a:hover{color:var(--accent)}
+
+    /* MODAL */
+    #modal-overlay{
+      display:none;position:fixed;inset:0;
+      background:rgba(0,0,0,.8);backdrop-filter:blur(12px);
+      z-index:200;padding:32px 16px;overflow-y:auto
+    }
+    #modal-overlay.open{display:flex;align-items:flex-start;justify-content:center}
+    .modal{
+      background:var(--surface);border:1px solid var(--border2);
+      border-radius:var(--r);max-width:780px;width:100%;
+      margin:auto;overflow:hidden;box-shadow:var(--shadow)
+    }
+    .modal-hd{
+      padding:22px 24px 18px;border-bottom:1px solid var(--border);
+      display:flex;align-items:center;justify-content:space-between;gap:14px
+    }
+    .modal-title{font-family:var(--display);font-size:1.35rem;font-weight:800}
+    .modal-x{
+      background:var(--bg);border:1px solid var(--border);
+      border-radius:8px;color:var(--muted);
+      font-size:15px;line-height:1;padding:6px 10px;
+      transition:all .25s;flex-shrink:0
+    }
+    .modal-x:hover{color:var(--text);border-color:var(--border2)}
+    .modal-body{padding:24px;max-height:72vh;overflow-y:auto}
+    .modal-body .readme-content{font-size:13.5px;color:#b0b8cc}
+    .modal-body .readme-content h1,.modal-body .readme-content h2,.modal-body .readme-content h3{font-size:15px;margin:12px 0 6px}
+    .modal-body .readme-content img{max-height:none}
+    .modal-body .readme-content pre{padding:14px}
+
+    /* RESPONSIVE */
+    @media(max-width:900px){
+      #grid{grid-template-columns:repeat(auto-fill,minmax(320px,1fr))}
+    }
+    @media(max-width:768px){
+      header{padding:72px 0 36px}
+      h1{font-size:clamp(2.2rem,8vw,3rem)}
+      #grid{grid-template-columns:1fr;gap:18px}
+      .nav-right .nav-link{display:none}
+      .ctrl-right{display:none}
+      #back-top{bottom:18px;right:18px;width:40px;height:40px}
+      #grid.list-view .card-image{width:180px}
+    }
+    @media(max-width:480px){
+      .wrapper{padding:0 14px}
+      .stat-card{padding:12px 16px;gap:10px}
+      .stat-val{font-size:1.4rem}
+      .filter-group{display:none}
+      .controls .search-wrap{min-width:100%}
+      #grid.list-view .card{flex-direction:column}
+      #grid.list-view .card-image{width:100%;height:160px;border-radius:var(--r)var(--r)0 0}
+      #toast{left:14px;right:14px;transform:translateY(80px);width:auto}
+      #toast.show{transform:translateY(0)}
+      .modal-hd{padding:16px 18px}
+      .modal-body{padding:16px}
     }
   </style>
 </head>
 <body>
 
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
+<a class="skip-link" href="#grid">Saltar al contenido</a>
+
+<div id="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+<div class="orb orb-1" aria-hidden="true"></div>
+<div class="orb orb-2" aria-hidden="true"></div>
+<div class="orb orb-3" aria-hidden="true"></div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- NAV -->
+<nav id="nav" aria-label="Navegación principal">
+  <div class="wrapper">
+    <div class="nav-inner">
+      <a class="nav-logo" href="#" aria-label="HRDTech inicio">
+        <div class="nav-dot" aria-hidden="true"></div>
+        HRD<span style="color:var(--accent)">Tech</span>
+      </a>
+      <div class="nav-right">
+        <a class="nav-link" href="#repos">Repositorios</a>
+        <a class="nav-gh-btn" href="https://github.com/HRDTech" target="_blank" rel="noopener noreferrer" aria-label="Ver en GitHub">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          GitHub ↗
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
 
 <div class="wrapper">
 
   <!-- HEADER -->
   <header>
-    <div class="logo-badge">
-      <span class="logo-dot"></span>
-      github.com/HRDTech
+    <div class="header-eyebrow" aria-hidden="true">
+      <span>⬡</span> github.com / HRDTech
     </div>
-    <h1>HRD<span>Tech</span><br>Apps & Projects</h1>
-    <p class="subtitle">Explora y descarga todas las aplicaciones y proyectos desarrollados por HRDTech.</p>
-    <div class="stats-bar" id="stats-bar">
-      <div class="stat"><strong id="stat-repos">—</strong> repositorios</div>
-      <div class="stat"><strong id="stat-releases">—</strong> releases</div>
-      <div class="stat"><strong id="stat-langs">—</strong> lenguajes</div>
+    <h1>HRD<span class="g1">Tech</span><br><span class="g2">Apps</span> &amp; Projects</h1>
+    <p class="subtitle">
+      Explora, descarga y contribuye a todas las aplicaciones y proyectos
+      de software desarrollados por HRDTech. Código abierto, listo para usar.
+    </p>
+    <div class="stats-row" id="stats-row" aria-label="Estadísticas">
+      <div class="stat-card">
+        <div class="stat-icon si-green" aria-hidden="true">📦</div>
+        <div class="stat-info">
+          <span class="stat-val" id="stat-repos">—</span>
+          <span class="stat-lbl">repositorios</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon si-blue" aria-hidden="true">🚀</div>
+        <div class="stat-info">
+          <span class="stat-val" id="stat-releases">—</span>
+          <span class="stat-lbl">releases</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon si-purple" aria-hidden="true">⚡</div>
+        <div class="stat-info">
+          <span class="stat-val" id="stat-langs">—</span>
+          <span class="stat-lbl">lenguajes</span>
+        </div>
+      </div>
     </div>
   </header>
 
   <!-- ERROR -->
-  <div id="error-banner"></div>
+  <div id="error-banner" role="alert"></div>
 
   <!-- CONTROLS -->
-  <div class="controls">
-    <div class="search-wrap">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
-      </svg>
-      <input type="search" id="search" placeholder="Buscar repositorios…" aria-label="Buscar" />
+  <div class="controls-wrap" id="repos">
+    <div class="controls">
+      <div class="search-wrap">
+        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input type="search" id="search" placeholder="Buscar repositorios…" aria-label="Buscar repositorios" autocomplete="off" />
+      </div>
+      <div class="filter-group" id="filter-btns" role="group" aria-label="Filtrar por lenguaje">
+        <button class="filter-btn active" data-lang="all">Todos</button>
+      </div>
+      <div class="ctrl-right">
+        <select class="ctrl-select" id="sort-select" aria-label="Ordenar por">
+          <option value="updated">Más recientes</option>
+          <option value="stars">Más estrellas</option>
+          <option value="name">Nombre A–Z</option>
+          <option value="forks">Más forks</option>
+        </select>
+        <div class="view-toggle" role="group" aria-label="Tipo de vista">
+          <button class="view-btn active" id="btn-grid" title="Vista cuadrícula" aria-pressed="true">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+              <rect x="0" y="0" width="6" height="6" rx="1"/><rect x="8" y="0" width="6" height="6" rx="1"/>
+              <rect x="0" y="8" width="6" height="6" rx="1"/><rect x="8" y="8" width="6" height="6" rx="1"/>
+            </svg>
+          </button>
+          <button class="view-btn" id="btn-list" title="Vista lista" aria-pressed="false">
+            <svg width="13" height="13" viewBox="0 0 14 14" fill="currentColor" aria-hidden="true">
+              <rect x="0" y="1" width="14" height="2" rx="1"/><rect x="0" y="6" width="14" height="2" rx="1"/>
+              <rect x="0" y="11" width="14" height="2" rx="1"/>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
-    <div class="filter-btns" id="filter-btns">
-      <button class="filter-btn active" data-lang="all">Todos</button>
-    </div>
-    <select class="sort-select" id="sort-select" aria-label="Ordenar">
-      <option value="updated">Más recientes</option>
-      <option value="stars">Más estrellas</option>
-      <option value="name">Nombre A–Z</option>
-      <option value="forks">Más forks</option>
-    </select>
   </div>
 
   <!-- GRID -->
-  <div id="grid" role="list" aria-label="Repositorios" aria-live="polite"></div>
+  <div id="grid" role="list" aria-label="Repositorios" aria-live="polite">
+    <div id="empty" class="empty-state" role="status">
+      <div class="empty-emoji" aria-hidden="true">🔍</div>
+      <h3>Sin resultados</h3>
+      <p>Prueba con otro término o filtra por lenguaje</p>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer>
-    <span>HRDTech · Portafolio generado dinámicamente via GitHub API</span>
-    <a href="https://github.com/HRDTech" target="_blank" rel="noopener">
-      Ver organización en GitHub ↗
-    </a>
+    <div class="footer-brand">
+      <div class="footer-logo">HRD<span>Tech</span></div>
+      <div class="footer-sub">Portfolio generado dinámicamente vía GitHub API</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/HRDTech" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a href="#repos">Repositorios</a>
+    </div>
   </footer>
+
 </div>
+
+<!-- BACK TO TOP -->
+<button id="back-top" aria-label="Volver al inicio">↑</button>
 
 <!-- README MODAL -->
 <div id="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal">
-    <button class="modal-close" id="modal-close" aria-label="Cerrar">✕</button>
-    <h2 class="modal-title" id="modal-title"></h2>
-    <div class="modal-readme readme-content" id="modal-readme"></div>
+    <div class="modal-hd">
+      <h2 class="modal-title" id="modal-title"></h2>
+      <button class="modal-x" id="modal-close" aria-label="Cerrar modal">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="readme-content modal-readme" id="modal-readme"></div>
+    </div>
   </div>
 </div>
 
 <script>
-/* ─── CONFIG ─────────────────────────────────────────────────── */
 const ORG      = 'HRDTech';
 const API      = 'https://api.github.com';
-const HEADERS  = { Accept: 'application/vnd.github+json' };
-const PER_PAGE = 100;
+const HEADERS  = {
+  'Accept': 'application/vnd.github+json',
+  'X-GitHub-Api-Version': '2022-11-28'
+};
+const CACHE_TTL = 600000; // 10 min
+const CACHE_KEY = 'hrd_cache_v1';
 
-/* ─── STATE ──────────────────────────────────────────────────── */
 let allRepos   = [];
 let langFilter = 'all';
 let sortMode   = 'updated';
 let searchTerm = '';
+let isListView = false;
 
-/* ─── LANGUAGE COLORS (GitHub palette) ──────────────────────── */
-const LANG_COLORS = {
-  JavaScript:'#f1e05a', TypeScript:'#3178c6', Python:'#3572A5',
-  Java:'#b07219', Kotlin:'#A97BFF', Swift:'#F05138',
-  'C#':'#178600', 'C++':'#f34b7d', C:'#555555', Go:'#00ADD8',
-  Rust:'#dea584', Ruby:'#701516', PHP:'#4F5D95', HTML:'#e34c26',
-  CSS:'#563d7c', Shell:'#89e051', Dart:'#00B4AB', Vue:'#41b883',
-  Svelte:'#ff3e00', Dockerfile:'#384d54',
+const LANG_COLOR = {
+  JavaScript:'#f1e05a',TypeScript:'#3178c6',Python:'#3572A5',
+  Java:'#b07219',Kotlin:'#A97BFF',Swift:'#F05138',
+  'C#':'#178600','C++':'#f34b7d',C:'#555555',Go:'#00ADD8',
+  Rust:'#dea584',Ruby:'#701516',PHP:'#4F5D95',HTML:'#e34c26',
+  CSS:'#563d7c',Shell:'#89e051',Dart:'#00B4AB',Vue:'#41b883',
+  Svelte:'#ff3e00',Dockerfile:'#384d54',R:'#198CE7',Lua:'#000080',
 };
-function langColor(l){ return LANG_COLORS[l] || '#6b7280'; }
+const LANG_EMOJI = {
+  JavaScript:'🟨',TypeScript:'🔷',Python:'🐍',Java:'☕',Kotlin:'🔮',
+  Swift:'🍎','C#':'🟣','C++':'🔵',C:'⚙️',Go:'🐹',Rust:'🦀',
+  Ruby:'💎',PHP:'🐘',HTML:'🌐',CSS:'🎨',Shell:'🐚',Dart:'🎯',
+  Vue:'💚',Svelte:'🔥',Dockerfile:'🐳',R:'📊',Lua:'🌙',
+};
 
-/* ─── FETCH HELPERS ──────────────────────────────────────────── */
-async function apiFetch(url, silent=false){
-  try {
-    const r = await fetch(url, { headers: HEADERS });
-    if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+function lc(l){return LANG_COLOR[l]||'#6b7280'}
+function le(l){return LANG_EMOJI[l]||'📁'}
+
+/* PROGRESS BAR */
+const $pb=document.getElementById('progress-bar');
+function setProgress(done,total){
+  const pct=total>0?Math.min(Math.round(done/total*100),100):0;
+  $pb.style.width=pct+'%';
+  $pb.setAttribute('aria-valuenow',pct);
+  if(pct>=100)setTimeout(()=>$pb.classList.add('done'),500);
+}
+
+/* TOAST */
+let toastTimer;
+function showToast(msg,type=''){
+  const t=document.getElementById('toast');
+  clearTimeout(toastTimer);
+  t.textContent=msg;
+  t.className='toast-'+type;
+  t.classList.add('show');
+  toastTimer=setTimeout(()=>t.classList.remove('show'),4000);
+}
+
+/* CACHE */
+function getCache(){try{const c=JSON.parse(localStorage.getItem(CACHE_KEY));return c&&Date.now()-c.ts<CACHE_TTL?c:null}catch{return null}}
+function setCache(data){try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data}))}catch{}}
+
+/* API HELPERS */
+async function apiFetch(url,silent=false){
+  try{
+    const r=await fetch(url,{headers:HEADERS});
+    if(!r.ok)throw new Error(`${r.status} ${r.statusText}`);
     return r.json();
-  } catch(e){
-    if (!silent) throw e;
+  }catch(e){
+    if(!silent)throw e;
     return null;
   }
 }
 
 async function fetchRepos(){
-  const data = await apiFetch(`${API}/orgs/${ORG}/repos?per_page=${PER_PAGE}&sort=updated&type=public`);
-  return Array.isArray(data) ? data : [];
+  const data=await apiFetch(`${API}/orgs/${ORG}/repos?per_page=100&sort=updated&type=public`);
+  return Array.isArray(data)?data:[];
 }
 
 async function fetchReadme(repo){
-  const data = await apiFetch(`${API}/repos/${ORG}/${repo}/readme`, true);
-  if (!data?.content) return null;
-  return atob(data.content.replace(/\n/g,''));
+  const data=await apiFetch(`${API}/repos/${ORG}/${repo}/readme`,true);
+  if(!data?.content)return null;
+  try{return atob(data.content.replace(/\n/g,''))}catch{return null}
 }
 
 async function fetchReleases(repo){
-  const data = await apiFetch(`${API}/repos/${ORG}/${repo}/releases?per_page=3`, true);
-  return Array.isArray(data) ? data : [];
+  const data=await apiFetch(`${API}/repos/${ORG}/${repo}/releases?per_page=5`,true);
+  return Array.isArray(data)?data:[];
 }
 
-/* ─── RENDER ─────────────────────────────────────────────────── */
-function renderCard(repo, readme, releases, idx){
-  const lang     = repo.language || '';
-  const color    = langColor(lang);
-  const updated  = new Date(repo.updated_at).toLocaleDateString('es', {year:'numeric',month:'short',day:'numeric'});
-  const readmeHTML = readme ? marked.parse(readme) : '';
+/* UTILS */
+function formatBytes(b){
+  if(b<1024)return b+' B';
+  if(b<1048576)return(b/1024).toFixed(0)+' KB';
+  return(b/1048576).toFixed(1)+' MB';
+}
 
-  // Releases HTML
-  let relHTML = '';
-  if (releases.length === 0){
-    relHTML = `<p class="no-release">Sin releases publicados</p>`;
-  } else {
-    relHTML = releases.map(rel => {
-      const assetLinks = rel.assets
-        .filter(a => !a.name.endsWith('.yml') && !a.name.endsWith('.yaml'))
-        .slice(0,3)
-        .map(a => {
-          const icon = assetIcon(a.name);
-          const size = formatBytes(a.size);
-          return `<a class="dl-btn" href="${a.browser_download_url}" download title="${a.name} (${size})">
-            ${icon} ${shortName(a.name)}
-          </a>`;
-        }).join('');
+function timeAgo(dateStr){
+  const s=(Date.now()-new Date(dateStr))/1000;
+  if(s<60)return 'ahora';
+  if(s<3600)return `hace ${Math.floor(s/60)}min`;
+  if(s<86400)return `hace ${Math.floor(s/3600)}h`;
+  if(s<2592000)return `hace ${Math.floor(s/86400)}d`;
+  if(s<31536000)return `hace ${Math.floor(s/2592000)} ${Math.floor(s/2592000)===1?'mes':'meses'}`;
+  const y=Math.floor(s/31536000);
+  return `hace ${y} ${y===1?'año':'años'}`;
+}
 
-      const srcBtn = `<a class="dl-btn source" href="${rel.zipball_url}" download title="Código fuente .zip">
+function shortName(n){
+  const dot=n.lastIndexOf('.');
+  if(dot===-1)return n.length>14?n.slice(0,14)+'…':n;
+  const ext=n.slice(dot);const base=n.slice(0,dot);
+  return base.length>11?base.slice(0,11)+'…'+ext:n;
+}
+
+function assetIcon(name){
+  const n=name.toLowerCase();
+  if(n.endsWith('.apk'))return '🤖';
+  if(n.endsWith('.exe')||n.endsWith('.msi'))return '🪟';
+  if(n.endsWith('.dmg')||n.endsWith('.pkg'))return '🍎';
+  if(n.endsWith('.deb')||n.endsWith('.rpm'))return '🐧';
+  if(n.endsWith('.jar'))return '☕';
+  if(n.endsWith('.zip')||n.endsWith('.tar.gz')||n.endsWith('.tgz'))return '📦';
+  if(n.endsWith('.ipa'))return '📱';
+  if(n.endsWith('.aab'))return '🤖';
+  return '⬇';
+}
+
+function escHtml(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function socialImg(repo){
+  return `https://socialify.git.ci/${ORG}/${repo}/image?description=1&font=Inter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Dark`;
+}
+
+function formatNumber(n){
+  if(n>=1000)return (n/1000).toFixed(1).replace(/\.0$/,'')+'k';
+  return String(n);
+}
+
+/* RENDER CARD */
+function renderCard(repo,readme,releases,idx){
+  const lang=repo.language||'';
+  const color=lc(lang);const emoji=le(lang);
+  const updated=timeAgo(repo.updated_at);
+  const topics=Array.isArray(repo.topics)?repo.topics:[];
+  const initial=repo.name.charAt(0).toUpperCase();
+
+  let readmeHTML='';
+  if(readme&&typeof marked!=='undefined'&&marked.parse){
+    try{readmeHTML=marked.parse(readme)}catch(e){readmeHTML=''}
+  }else if(readme){
+    readmeHTML='<p>README disponible (requiere recargar la página)</p>';
+  }
+
+  let relHTML;
+  if(releases.length===0){
+    relHTML=`<p class="no-release">// Sin releases publicados</p>`;
+  }else{
+    relHTML=releases.slice(0,3).map(rel=>{
+      const assets=rel.assets.filter(a=>
+        !a.name.endsWith('.yml')&&!a.name.endsWith('.yaml')&&!a.name.endsWith('.txt')
+      );
+      const primBtns=assets.slice(0,3).map(a=>
+        `<a class="dl-btn dl-primary" href="${escHtml(a.browser_download_url)}"
+            title="${escHtml(a.name)} · ${formatBytes(a.size)} · ${a.download_count} descargas" download>
+           ${assetIcon(a.name)} ${shortName(a.name)}
+           <span class="dl-count">${formatNumber(a.download_count)}</span>
+         </a>`
+      ).join('');
+      const srcBtn=`<a class="dl-btn dl-source" href="${escHtml(rel.zipball_url)}" title="Código fuente .zip" download>
         📦 src.zip
       </a>`;
-
-      return `<div class="release-item">
-        <div>
-          <div class="release-tag">
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
-              <path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25zM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-            </svg>
-            <strong>${rel.tag_name}</strong>
+      const relDate=timeAgo(rel.published_at||rel.created_at);
+      const relDisplayName=rel.name&&rel.name!==rel.tag_name?rel.name:'';
+      return `
+        <div class="release-item">
+          <div class="release-top">
+            <span class="release-ver">${escHtml(rel.tag_name)}</span>
+            <span class="release-date">${relDate}</span>
           </div>
-          <div class="release-name" title="${rel.name || rel.tag_name}">${rel.name || rel.tag_name}</div>
-        </div>
-        <div class="release-assets">
-          ${assetLinks || srcBtn}
-          ${assetLinks ? srcBtn : ''}
-        </div>
-      </div>`;
+          ${relDisplayName?`<div class="release-name" title="${escHtml(relDisplayName)}">${escHtml(relDisplayName)}</div>`:''}
+          <div class="release-assets">
+            ${primBtns||srcBtn}
+            ${primBtns?srcBtn:''}
+          </div>
+        </div>`;
     }).join('');
   }
 
-  // README preview
-  let readmeSection = '';
-  if (readmeHTML){
-    readmeSection = `
+  let readmeSection;
+  if(readmeHTML){
+    readmeSection=`
       <div class="readme-area">
+        <div class="section-lbl">
+          <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75zm8.755 3a2.25 2.25 0 0 1 2.25-2.25H14.5v9h-3.757a3.75 3.75 0 0 0-1.992.572zM7.25 7.25a3.75 3.75 0 0 0-1.992-.572H1.5v9h3.757a2.25 2.25 0 0 1 2.25-2.25z"/>
+          </svg>
+          README
+        </div>
         <div class="readme-collapsed" id="rc-${repo.id}">
           <div class="readme-content">${readmeHTML}</div>
         </div>
-        <button class="read-more-btn" onclick="expandReadme(${repo.id},'${escStr(repo.name)}',this)">
+        <button class="expand-btn" onclick="doExpand(${repo.id},'${escHtml(repo.name)}',this)" aria-expanded="false">
           Leer más ↓
         </button>
       </div>`;
-  } else {
-    readmeSection = `<div class="readme-area"><p class="no-readme">// Sin README</p></div>`;
+  }else{
+    readmeSection=`<div class="readme-area"><p class="no-readme">// Sin README disponible</p></div>`;
   }
 
-  const card = document.createElement('article');
-  card.className = 'card';
-  card.style.animationDelay = `${idx * 60}ms`;
-  card.dataset.name    = repo.name.toLowerCase();
-  card.dataset.lang    = lang.toLowerCase();
-  card.dataset.stars   = repo.stargazers_count;
-  card.dataset.forks   = repo.forks_count;
-  card.dataset.updated = repo.updated_at;
-  card.role = 'listitem';
+  const card=document.createElement('article');
+  card.className='card';
+  card.style.animationDelay=`${Math.min(idx*50,350)}ms`;
+  card.dataset.name=repo.name.toLowerCase();
+  card.dataset.desc=(repo.description||'').toLowerCase();
+  card.dataset.topics=topics.join(' ').toLowerCase();
+  card.dataset.lang=lang.toLowerCase();
+  card.dataset.stars=repo.stargazers_count;
+  card.dataset.forks=repo.forks_count;
+  card.dataset.updated=repo.updated_at;
+  card.setAttribute('role','listitem');
 
-  card.innerHTML = `
-    <div class="card-header">
-      <h2 class="card-title">
-        <a href="${repo.html_url}" target="_blank" rel="noopener">${repo.name}</a>
-      </h2>
-      ${lang ? `<div class="lang-badge">
-        <span class="lang-dot" style="background:${color}"></span>
-        ${lang}
-      </div>` : ''}
-    </div>
+  const imgUrl=socialImg(repo.name);
 
-    ${readmeSection}
-
-    <div class="releases-section">
-      <p class="releases-title">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" style="display:inline;vertical-align:middle;margin-right:4px">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-        </svg>
-        Releases
-      </p>
-      ${relHTML}
-    </div>
-
-    <div class="card-footer">
-      <div class="meta-pills">
-        <span class="meta-pill" title="Estrellas">
-          ★ ${repo.stargazers_count}
-        </span>
-        <span class="meta-pill" title="Forks">
-          ⑂ ${repo.forks_count}
-        </span>
-        <span class="meta-pill" title="Actualizado">${updated}</span>
+  card.innerHTML=`
+    <div class="card-image">
+      <div class="card-img-placeholder" data-init="${initial}" aria-hidden="true"
+           style="background:linear-gradient(135deg,${lc(lang)}18 0%,${lc(lang)}08 100%)">
+        <span class="card-emoji">${emoji}</span>
       </div>
-      <a class="gh-link" href="${repo.html_url}" target="_blank" rel="noopener">
-        <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
-        </svg>
-        GitHub ↗
-      </a>
+      <img class="card-og-img"
+           src="${imgUrl}"
+           alt="Preview de ${escHtml(repo.name)}"
+           loading="lazy"
+           onerror="this.style.display='none'"
+      />
+      ${repo.archived?'<div class="badge-archived">Archivado</div>':''}
+    </div>
+
+    <div class="card-main">
+      <div class="card-header">
+        <h2 class="card-title">
+          <a href="${escHtml(repo.html_url)}" target="_blank" rel="noopener noreferrer">${escHtml(repo.name)}</a>
+        </h2>
+        ${lang?`<div class="lang-badge">
+          <span class="lang-dot" style="background:${color}"></span>
+          ${escHtml(lang)}
+        </div>`:''}
+      </div>
+
+      <p class="card-desc${repo.description?'':' empty'}">
+        ${repo.description?escHtml(repo.description):'// Sin descripción'}
+      </p>
+
+      ${topics.length?`<div class="topics" aria-label="Temas">
+        ${topics.slice(0,6).map(t=>`<span class="topic">${escHtml(t)}</span>`).join('')}
+      </div>`:''}
+
+      ${readmeSection}
+
+      <div class="releases-section">
+        <p class="section-lbl">
+          <svg width="10" height="10" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M1 7.775V2.75C1 1.784 1.784 1 2.75 1h5.025c.464 0 .91.184 1.238.513l6.25 6.25a1.75 1.75 0 0 1 0 2.474l-5.026 5.026a1.75 1.75 0 0 1-2.474 0l-6.25-6.25A1.752 1.752 0 0 1 1 7.775zm1.5 0c0 .066.026.13.073.177l6.25 6.25a.25.25 0 0 0 .354 0l5.025-5.025a.25.25 0 0 0 0-.354l-6.25-6.25a.25.25 0 0 0-.177-.073H2.75a.25.25 0 0 0-.25.25zM6 5a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+          </svg>
+          Releases
+        </p>
+        ${relHTML}
+      </div>
+
+      <div class="card-footer">
+        <div class="meta-pills" aria-label="Estadísticas del repositorio">
+          <span class="meta-pill" title="Estrellas">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+            ${repo.stargazers_count}
+          </span>
+          <span class="meta-pill" title="Forks">
+            <svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0zM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0z"/></svg>
+            ${repo.forks_count}
+          </span>
+          <span class="meta-pill" title="Última actualización">${updated}</span>
+        </div>
+        <a class="gh-link" href="${escHtml(repo.html_url)}" target="_blank" rel="noopener noreferrer" aria-label="Ver ${escHtml(repo.name)} en GitHub">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/>
+          </svg>
+          GitHub ↗
+        </a>
+      </div>
     </div>`;
 
   return card;
 }
 
-/* ─── UTILS ──────────────────────────────────────────────────── */
-function escStr(s){ return s.replace(/'/g,"\\'"); }
-function formatBytes(b){
-  if(b<1024) return b+'B';
-  if(b<1024*1024) return (b/1024).toFixed(0)+'KB';
-  return (b/(1024*1024)).toFixed(1)+'MB';
-}
-function shortName(n){
-  const ext = n.split('.').pop();
-  const base = n.replace('.'+ext,'');
-  return base.length > 10 ? base.slice(0,10)+'….'+ext : n;
-}
-function assetIcon(name){
-  const n = name.toLowerCase();
-  if(n.endsWith('.apk')) return '🤖';
-  if(n.endsWith('.exe')||n.endsWith('.msi')) return '🪟';
-  if(n.endsWith('.dmg')||n.endsWith('.pkg')) return '🍎';
-  if(n.endsWith('.zip')||n.endsWith('.tar.gz')) return '📦';
-  if(n.endsWith('.deb')||n.endsWith('.rpm')) return '🐧';
-  if(n.endsWith('.jar')) return '☕';
-  return '⬇';
-}
-
-/* ─── SKELETON LOADERS ───────────────────────────────────────── */
+/* SKELETONS */
 function showSkeletons(n=6){
-  const g = document.getElementById('grid');
-  g.innerHTML = '';
+  const g=document.getElementById('grid');
+  g.innerHTML=`<div id="empty" class="empty-state" role="status">
+    <div class="empty-emoji" aria-hidden="true">🔍</div>
+    <h3>Sin resultados</h3>
+    <p>Prueba con otro término o filtra por lenguaje</p>
+  </div>`;
   for(let i=0;i<n;i++){
-    const s = document.createElement('div');
-    s.className = 'skeleton-card';
+    const s=document.createElement('div');
+    s.className='sk-card';
+    s.setAttribute('aria-hidden','true');
+    s.innerHTML=`<div class="sk-card-body">
+      <div class="sk-line"></div>
+      <div class="sk-line"></div>
+      <div class="sk-line"></div>
+      <div class="sk-line"></div>
+      <div class="sk-line"></div>
+    </div>`;
     g.appendChild(s);
   }
 }
 
-/* ─── FILTER & SORT ──────────────────────────────────────────── */
-function applyFilters(){
-  const term = searchTerm.toLowerCase();
-  const grid = document.getElementById('grid');
-  const cards = [...grid.querySelectorAll('.card')];
-  let visible = 0;
-
-  cards.forEach(c => {
-    const nameMatch = c.dataset.name.includes(term);
-    const langMatch = langFilter === 'all' || c.dataset.lang === langFilter.toLowerCase();
-    const show = nameMatch && langMatch;
-    c.style.display = show ? '' : 'none';
-    if(show) visible++;
-  });
-
-  // Sort
-  const sorted = cards.filter(c => c.style.display !== 'none');
-  sorted.sort((a,b) => {
-    if(sortMode==='stars')   return +b.dataset.stars - +a.dataset.stars;
-    if(sortMode==='forks')   return +b.dataset.forks - +a.dataset.forks;
-    if(sortMode==='name')    return a.dataset.name.localeCompare(b.dataset.name);
-    return new Date(b.dataset.updated) - new Date(a.dataset.updated);
-  });
-  sorted.forEach(c => grid.appendChild(c));
-
-  document.getElementById('empty').style.display = visible === 0 ? 'flex' : 'none';
-}
-
-/* ─── LANGUAGE FILTER BUTTONS ────────────────────────────────── */
+/* LANG FILTERS */
 function buildLangFilters(repos){
-  const counts = {};
-  repos.forEach(r => { if(r.language) counts[r.language] = (counts[r.language]||0)+1; });
-  const fb = document.getElementById('filter-btns');
+  const counts={};
+  repos.forEach(r=>{if(r.language)counts[r.language]=(counts[r.language]||0)+1});
+  const fb=document.getElementById('filter-btns');
   Object.entries(counts)
     .sort((a,b)=>b[1]-a[1])
     .slice(0,8)
     .forEach(([lang])=>{
-      const btn = document.createElement('button');
+      const btn=document.createElement('button');
       btn.className='filter-btn';
       btn.dataset.lang=lang;
-      btn.innerHTML=`<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${langColor(lang)};margin-right:5px"></span>${lang}`;
+      btn.innerHTML=`<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${lc(lang)};margin-right:5px;vertical-align:middle" aria-hidden="true"></span>${escHtml(lang)}`;
       fb.appendChild(btn);
     });
 }
 
-/* ─── README MODAL ───────────────────────────────────────────── */
-window.expandReadme = function(id, name, btn){
-  const collapsed = document.getElementById('rc-'+id);
-  if(collapsed){
-    // Expand inline
-    collapsed.classList.remove('readme-collapsed');
-    btn.style.display='none';
+/* FILTER + SORT */
+function applyFilters(){
+  const term=searchTerm.toLowerCase().trim();
+  const grid=document.getElementById('grid');
+  const cards=[...grid.querySelectorAll('.card')];
+  let visible=0;
+
+  cards.forEach(c=>{
+    const q=term===''||[c.dataset.name,c.dataset.desc,c.dataset.topics].some(f=>f.includes(term));
+    const l=langFilter==='all'||c.dataset.lang===langFilter.toLowerCase();
+    const show=q&&l;
+    c.style.display=show?'':'none';
+    if(show)visible++;
+  });
+
+  const vc=cards.filter(c=>c.style.display!=='none');
+  vc.sort((a,b)=>{
+    if(sortMode==='stars')return +b.dataset.stars-+a.dataset.stars;
+    if(sortMode==='forks')return +b.dataset.forks-+a.dataset.forks;
+    if(sortMode==='name')return a.dataset.name.localeCompare(b.dataset.name);
+    return new Date(b.dataset.updated)-new Date(a.dataset.updated);
+  });
+  const empty=document.getElementById('empty');
+  vc.forEach(c=>grid.insertBefore(c,empty));
+  if(empty)empty.classList.toggle('show',visible===0);
+}
+
+/* README EXPAND */
+window.doExpand=function(id,name,btn){
+  const el=document.getElementById('rc-'+id);
+  if(!el)return;
+  const expanded=btn.getAttribute('aria-expanded')==='true';
+  if(!expanded){
+    el.classList.remove('readme-collapsed');
+    btn.textContent='Leer menos ↑';
+    btn.setAttribute('aria-expanded','true');
+  }else{
+    el.classList.add('readme-collapsed');
+    btn.textContent='Leer más ↓';
+    btn.setAttribute('aria-expanded','false');
   }
 };
 
+/* MODAL */
 function closeModal(){
   document.getElementById('modal-overlay').classList.remove('open');
   document.body.style.overflow='';
 }
-document.getElementById('modal-close').addEventListener('click', closeModal);
-document.getElementById('modal-overlay').addEventListener('click', e => {
-  if(e.target === document.getElementById('modal-overlay')) closeModal();
+document.getElementById('modal-close').addEventListener('click',closeModal);
+document.getElementById('modal-overlay').addEventListener('click',e=>{
+  if(e.target===e.currentTarget)closeModal();
 });
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 
-/* ─── MAIN ───────────────────────────────────────────────────── */
+/* SCROLL */
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+  document.getElementById('back-top').classList.toggle('show',window.scrollY>400);
+},{passive:true});
+
+document.getElementById('back-top').addEventListener('click',()=>{
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+/* VIEW TOGGLE */
+document.getElementById('btn-grid').addEventListener('click',()=>{
+  isListView=false;
+  document.getElementById('grid').classList.remove('list-view');
+  document.getElementById('btn-grid').classList.add('active');
+  document.getElementById('btn-list').classList.remove('active');
+  document.getElementById('btn-grid').setAttribute('aria-pressed','true');
+  document.getElementById('btn-list').setAttribute('aria-pressed','false');
+});
+document.getElementById('btn-list').addEventListener('click',()=>{
+  isListView=true;
+  document.getElementById('grid').classList.add('list-view');
+  document.getElementById('btn-list').classList.add('active');
+  document.getElementById('btn-grid').classList.remove('active');
+  document.getElementById('btn-list').setAttribute('aria-pressed','true');
+  document.getElementById('btn-grid').setAttribute('aria-pressed','false');
+});
+
+/* MAIN */
 async function main(){
-  showSkeletons(6);
-  const errBanner = document.getElementById('error-banner');
+  const cache=getCache();
 
+  if(cache){
+    allRepos=cache.data.repos;
+    buildLangFilters(allRepos);
+    const grid=document.getElementById('grid');
+    grid.innerHTML=`<div id="empty" class="empty-state" role="status">
+      <div class="empty-emoji" aria-hidden="true">🔍</div>
+      <h3>Sin resultados</h3>
+      <p>Prueba con otro término o filtra por lenguaje</p>
+    </div>`;
+
+    cache.data.cards.forEach((cdata,i)=>{
+      const card=renderCard(cdata.repo,cdata.readme,cdata.releases,i);
+      const emptyEl=document.getElementById('empty');
+      grid.insertBefore(card,emptyEl);
+    });
+
+    document.getElementById('stat-repos').textContent=allRepos.length;
+    document.getElementById('stat-releases').textContent=cache.data.totalReleases;
+    document.getElementById('stat-langs').textContent=cache.data.langCount;
+
+    wireControls();
+    setProgress(1,1);
+
+    setTimeout(()=>{
+      document.getElementById('progress-bar').classList.add('done');
+    },800);
+
+    showToast('Datos cargados desde caché','success');
+    return;
+  }
+
+  showSkeletons(6);
+  setProgress(0,1);
+
+  const errBanner=document.getElementById('error-banner');
   let repos;
-  try {
-    repos = await fetchRepos();
-  } catch(e){
+
+  try{
+    repos=await fetchRepos();
+  }catch(e){
     errBanner.style.display='block';
-    errBanner.textContent = `⚠ No se pudieron cargar los repositorios: ${e.message}. Verifica que la organización sea pública o intenta más tarde.`;
+    errBanner.textContent=`⚠ No se pudieron cargar los repositorios: ${e.message}. Verifica que la organización sea pública o intenta más tarde.`;
     document.getElementById('grid').innerHTML='';
+    showToast('Error al cargar repositorios','error');
     return;
   }
 
@@ -838,67 +1228,76 @@ async function main(){
     return;
   }
 
-  allRepos = repos;
+  allRepos=repos;
   buildLangFilters(repos);
 
-  // Fetch README + releases concurrently (limit parallelism)
-  const BATCH = 6;
-  const grid  = document.getElementById('grid');
-  grid.innerHTML = '';
+  const grid=document.getElementById('grid');
+  grid.innerHTML=`<div id="empty" class="empty-state" role="status">
+    <div class="empty-emoji" aria-hidden="true">🔍</div>
+    <h3>Sin resultados</h3>
+    <p>Prueba con otro término o filtra por lenguaje</p>
+  </div>`;
 
-  // Add empty state div
-  const emptyDiv = document.createElement('div');
-  emptyDiv.id = 'empty';
-  emptyDiv.innerHTML = `
-    <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-      <path d="M21 21l-4.35-4.35M11 6a5 5 0 1 1-10 0 5 5 0 0 1 10 0z"/>
-    </svg>
-    <p>No se encontraron repositorios con ese criterio.</p>`;
-  grid.appendChild(emptyDiv);
+  let totalReleases=0;
+  const langSet=new Set();
+  let loaded=0;
+  const cardsData=[];
 
-  let totalReleases = 0;
-  const langSet = new Set();
-
+  const BATCH=5;
   for(let i=0;i<repos.length;i+=BATCH){
-    const batch = repos.slice(i,i+BATCH);
-    const results = await Promise.all(batch.map(async (repo,bi)=>{
-      const [readme, releases] = await Promise.all([
-        fetchReadme(repo.name),
-        fetchReleases(repo.name)
-      ]);
-      return {repo, readme, releases, idx: i+bi};
-    }));
+    const batch=repos.slice(i,i+BATCH);
+    const results=await Promise.all(
+      batch.map(async(repo,bi)=>{
+        const [readme,releases]=await Promise.all([
+          fetchReadme(repo.name),
+          fetchReleases(repo.name)
+        ]);
+        return {repo,readme,releases,idx:i+bi};
+      })
+    );
 
     results.forEach(({repo,readme,releases,idx})=>{
-      totalReleases += releases.length;
-      if(repo.language) langSet.add(repo.language);
-      const card = renderCard(repo, readme, releases, idx);
-      grid.insertBefore(card, emptyDiv);
+      totalReleases+=releases.length;
+      if(repo.language)langSet.add(repo.language);
+      const card=renderCard(repo,readme,releases,idx);
+      cardsData.push({repo,readme,releases});
+      const emptyEl=document.getElementById('empty');
+      grid.insertBefore(card,emptyEl);
+      loaded++;
     });
+
+    setProgress(loaded,repos.length);
   }
 
-  // Update stats
-  document.getElementById('stat-repos').textContent    = repos.length;
-  document.getElementById('stat-releases').textContent = totalReleases;
-  document.getElementById('stat-langs').textContent    = langSet.size;
+  document.getElementById('stat-repos').textContent=repos.length;
+  document.getElementById('stat-releases').textContent=totalReleases;
+  document.getElementById('stat-langs').textContent=langSet.size;
 
-  // Events
-  document.getElementById('search').addEventListener('input', e=>{
-    searchTerm = e.target.value;
-    applyFilters();
+  setCache({
+    repos,
+    cards:cardsData,
+    totalReleases,
+    langCount:langSet.size
   });
 
-  document.getElementById('filter-btns').addEventListener('click', e=>{
-    const btn = e.target.closest('.filter-btn');
-    if(!btn) return;
+  wireControls();
+}
+
+function wireControls(){
+  document.getElementById('search').addEventListener('input',e=>{
+    searchTerm=e.target.value;
+    applyFilters();
+  });
+  document.getElementById('filter-btns').addEventListener('click',e=>{
+    const btn=e.target.closest('.filter-btn');
+    if(!btn)return;
     document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
-    langFilter = btn.dataset.lang;
+    langFilter=btn.dataset.lang;
     applyFilters();
   });
-
-  document.getElementById('sort-select').addEventListener('change', e=>{
-    sortMode = e.target.value;
+  document.getElementById('sort-select').addEventListener('change',e=>{
+    sortMode=e.target.value;
     applyFilters();
   });
 }
