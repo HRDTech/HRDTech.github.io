@@ -827,7 +827,7 @@ async function apiFetch(url,silent=false){
 }
 
 async function fetchRepos(){
-  const data=await apiFetch(`${API}/orgs/${ORG}/repos?per_page=100&sort=updated&type=public`);
+  const data=await apiFetch(`${API}/users/${ORG}/repos?per_page=100&sort=updated&type=public`);
   return Array.isArray(data)?data:[];
 }
 
@@ -885,7 +885,7 @@ function escHtml(s){
 }
 
 function socialImg(repo){
-  return `https://socialify.git.ci/${ORG}/${repo}/image?description=1&font=Inter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Dark`;
+  return `https://socialify.git.ci/${ORG}/${repo}/image?description=1&font=Inter&forks=1&issues=1&language=1&name=1&owner=1&pattern=Plus&stargazers=1&theme=Dark`;
 }
 
 function formatNumber(n){
@@ -1215,7 +1215,7 @@ async function main(){
     repos=await fetchRepos();
   }catch(e){
     errBanner.style.display='block';
-    errBanner.textContent=`⚠ No se pudieron cargar los repositorios: ${e.message}. Verifica que la organización sea pública o intenta más tarde.`;
+    errBanner.textContent=`⚠ No se pudieron cargar los repositorios: ${e.message}. Verifica que la cuenta sea pública o intenta más tarde.`;
     document.getElementById('grid').innerHTML='';
     showToast('Error al cargar repositorios','error');
     return;
@@ -1223,7 +1223,7 @@ async function main(){
 
   if(!repos.length){
     errBanner.style.display='block';
-    errBanner.textContent='⚠ No se encontraron repositorios públicos en esta organización.';
+    errBanner.textContent='⚠ No se encontraron repositorios públicos.';
     document.getElementById('grid').innerHTML='';
     return;
   }
